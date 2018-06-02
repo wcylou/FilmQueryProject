@@ -21,6 +21,8 @@ public class Film {
 	String rating;
 	String specialFeatures;
 	List<Actor> actors;
+	String languageName;
+	List<String>category;
 
 	public Film() {
 	}
@@ -109,34 +111,6 @@ public class Film {
 		this.specialFeatures = specialFeatures;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Film [id=");
-		builder.append(id);
-		builder.append(", title=");
-		builder.append(title);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", releaseYear=");
-		builder.append(releaseYear);
-		builder.append(", languageId=");
-		builder.append(languageId);
-		builder.append(", rentalDuration=");
-		builder.append(rentalDuration);
-		builder.append(", rentalRate=");
-		builder.append(rentalRate);
-		builder.append(", length=");
-		builder.append(length);
-		builder.append(", replacementCost=");
-		builder.append(replacementCost);
-		builder.append(", rating=");
-		builder.append(rating);
-		builder.append(", specialFeatures=");
-		builder.append(specialFeatures);
-		builder.append("]");
-		return builder.toString();
-	}
 
 	@Override
 	public int hashCode() {
@@ -211,5 +185,64 @@ public class Film {
 
 	public void setActors(List<Actor> actors) {
 		this.actors = actors;
+	}
+
+	public String getLanguageName() {
+		return languageName;
+	}
+
+	public void setLanguageName(String languageName) {
+		this.languageName = languageName;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("\nFilm ID: ");
+		builder.append(id);
+		builder.append("\nTitle: ");
+		builder.append(title);
+		builder.append("\nDescription: ");
+		builder.append(description);
+		builder.append("\nRelease Year: ");
+		builder.append(releaseYear);
+		builder.append("\nLanguage ID: ");
+		builder.append(languageId);
+		builder.append("\nRental Duration: ");
+		builder.append(rentalDuration);
+		builder.append("\nRental Rate: ");
+		builder.append(rentalRate);
+		builder.append("\nLength: ");
+		builder.append(length);
+		builder.append("\nReplacement Cost: ");
+		builder.append(replacementCost);
+		builder.append("\nRating: ");
+		builder.append(rating);
+		builder.append("\nSpecial Features: ");
+		builder.append(specialFeatures);
+		builder.append("\nActors: ");
+		builder.append(actors);
+		builder.append("\nLanguage: ");
+		builder.append(languageName);
+		return builder.toString();
+	}
+	
+	public String toStringCompact() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Film ID: ");
+		builder.append(id);
+		builder.append("\nTitle: ");
+		builder.append(title);
+		builder.append("\nDescription: ");
+		builder.append(description);
+		builder.append("\nRelease Year: ");
+		builder.append(releaseYear);
+		builder.append("\nRating: ");
+		builder.append(rating);
+		builder.append("\nActors: ");
+		builder.append(actors);
+		builder.append("\nLanguage: ");
+		builder.append(languageName);
+		return builder.toString();
 	}
 }

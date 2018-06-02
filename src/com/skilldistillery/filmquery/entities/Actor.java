@@ -62,7 +62,6 @@ public class Actor {
 		builder.append(lastName);
 		builder.append(", films=");
 		builder.append(films);
-		builder.append("]");
 		return builder.toString();
 	}
 
