@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.experimental.categories.Categories;
+
 public class Film {
 	int id;
 	String title;
@@ -22,13 +24,15 @@ public class Film {
 	String specialFeatures;
 	List<Actor> actors;
 	String languageName;
-	List<String>category;
+	List<String>categories;
 
 	public Film() {
 	}
 
+
 	public Film(int id, String title, String description, int releaseYear, int languageId, int rentalDuration,
-			double rentalRate, int length, double replacementCost, String rating, String specialFeatures) {
+			double rentalRate, int length, double replacementCost, String rating, String specialFeatures,
+			List<Actor> actors, String languageName, List<String> categories) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -41,8 +45,12 @@ public class Film {
 		this.replacementCost = replacementCost;
 		this.rating = rating;
 		this.specialFeatures = specialFeatures;
+		this.actors = actors;
+		this.languageName = languageName;
+		this.categories = categories;
 	}
-	
+
+
 	public int getId() {
 		return id;
 	}
@@ -224,6 +232,8 @@ public class Film {
 		builder.append(actors);
 		builder.append("\nLanguage: ");
 		builder.append(languageName);
+		builder.append("\nCategories: ");
+		builder.append(categories);
 		return builder.toString();
 	}
 	
@@ -244,5 +254,15 @@ public class Film {
 		builder.append("\nLanguage: ");
 		builder.append(languageName);
 		return builder.toString();
+	}
+
+
+	public List<String> getCategory() {
+		return categories;
+	}
+
+
+	public void setCategory(List<String> category) {
+		this.categories = category;
 	}
 }

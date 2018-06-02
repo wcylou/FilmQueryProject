@@ -40,6 +40,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				film.setSpecialFeatures(rs.getString(11));
 				film.setActors(getActorsByFilmId(filmId));
 				film.setLanguageName(rs.getString(12));
+				film.setCategory(getCategoriesByFilm(filmId));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -50,7 +51,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 	@Override
 	public List<Film> getFilmByKeyword(String keyword) {
-		String sql = "select * from film where title like ? or description like ?";
+		String sql = "select f.id, f.title, f.description, f.release_year, f.language_id, f.rental_duration, f.rental_rate, f.length, f.replacement_cost, f.rating, f.special_features, l.name from film f join language l on l.id = f.language_id where title like ? or description like ?";
 		List<Film> films = new ArrayList<>();
 
 		try (Connection conn = DriverManager.getConnection(url, user, password);
@@ -72,6 +73,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				film.setReplacementCost(rs.getDouble(9));
 				film.setRating(rs.getString(10));
 				film.setSpecialFeatures(rs.getString(11));
+				film.setActors(getActorsByFilmId(rs.getInt(1)));
+				film.setLanguageName(rs.getString(12));
 				films.add(getFilmById(rs.getInt(1)));
 			}
 		} catch (SQLException e) {
@@ -80,6 +83,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 		return films;
 	}
+	
+	
 
 	@Override
 	public Actor getActorById(int actorId) {
@@ -120,6 +125,27 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			e.printStackTrace();
 		}
 		return actors;
+	}
+	
+	
+	public List<String> getCategoriesByFilm(int filmId) {
+		String sql = "  select c.name\n" + 
+				"  from film_category fc\n" + 
+				"  join category c on c.id = fc.category_id\n" + 
+				"where fc.film_id = ?";
+		List<String> categories = new ArrayList<>();
+		try (Connection conn = DriverManager.getConnection(url, user, password);
+				PreparedStatement stmt = conn.prepareStatement(sql);) {
+			stmt.setInt(1, filmId);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				categories.add(rs.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return categories;
 	}
 
 
