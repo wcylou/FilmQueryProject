@@ -17,10 +17,10 @@ public class FilmQueryApp {
 		app.launch();
 	}
 
-	private void test() {
-		Film film = db.getFilmById(1);
-		System.out.println(film);
-	}
+	// private void test() {
+	// Film film = db.getFilmById(1);
+	// System.out.println(film);
+	// }
 
 	private void launch() {
 		System.out.println("Menu\n1. Look up a film by ID\n2. Look up film by keyword\n3. Exit");
@@ -33,10 +33,9 @@ public class FilmQueryApp {
 			lookUpFilmByKeyword();
 			break;
 		case 3:
+			System.out.println("Bye");
 			System.exit(0);
 		}
-		startUserInterface(input);
-
 		input.close();
 	}
 
@@ -44,24 +43,30 @@ public class FilmQueryApp {
 		System.out.println("Enter the film ID");
 		int filmId = input.nextInt();
 		DatabaseAccessorObject dao = new DatabaseAccessorObject();
-		try {
-			System.out.println("1. View all details\n2. View basic details\n3. Return to main menu");
-			int choice = input.nextInt();
-			switch (choice) {
-			case 1:
+		System.out.println("1. View all details\n2. View basic details\n3. Return to main menu");
+		int choice = input.nextInt();
+		switch (choice) {
+		case 1:
+			try {
 				System.out.println(dao.getFilmById(filmId).toString());
-				break;
-			case 2:
-				System.out.println(dao.getFilmById(filmId).toStringCompact());
-				break;
-			case 3:
 				launch();
-				break;
+			} catch (Exception e) {
+				System.out.println("Film ID not found");
+				lookUpFilmById();
 			}
-		} catch (Exception e) {
-			System.out.println("Film ID not found");
-			filmId = input.nextInt();
-			System.out.println("Enter film ID again");
+			break;
+		case 2:
+			try {
+				System.out.println(dao.getFilmById(filmId).toStringCompact());
+				launch();
+			} catch (Exception e) {
+				System.out.println("Film ID not found");
+				lookUpFilmById();
+			}
+			break;
+		case 3:
+			launch();
+			break;
 		}
 	}
 
@@ -69,17 +74,11 @@ public class FilmQueryApp {
 		System.out.println("Enter a keyword");
 		String keyword = input.next();
 		DatabaseAccessorObject dao = new DatabaseAccessorObject();
-		try {
-			System.out.println(dao.getFilmByKeyword(keyword));
-		} catch (Exception e) {
-			System.out.println("Film ID not found");
-			keyword = input.next();
-			System.out.println("Enter film ID again");
+		System.out.println(dao.getFilmByKeyword(keyword).toString());
+		if (dao.getFilmByKeyword(keyword).isEmpty()) {
+			lookUpFilmByKeyword();
 		}
+		launch();
 	}
 
-	private void startUserInterface(Scanner input) {
-
-	}
-	
 }
